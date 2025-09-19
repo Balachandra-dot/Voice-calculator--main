@@ -136,7 +136,9 @@ if (window.SpeechRecognition) {
         const res = event.results;
         const last = res[res.length - 1];
         const transcript = last && last[0] ? last[0].transcript : '';
-        const normalized = normalizeSpeech(transcript);
+        // Remove trailing period that speech recognition might add
+        const cleanTranscript = transcript.replace(/\.$/, '');
+        const normalized = normalizeSpeech(cleanTranscript);
         input.value = normalized;
         evaluateAndShow(normalized);
     };
